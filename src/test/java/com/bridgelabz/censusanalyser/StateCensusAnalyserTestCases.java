@@ -30,4 +30,15 @@ public class StateCensusAnalyserTestCases {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
     }
+
+    //Test Case TC1.3
+    @Test
+    public void givenCSVFile_WhenFileTypeIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            int counter = stateCensusAnalyser.getNumberOfRecords(SAMPLE_CSV_INCORRECT_FILE_TYPE);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, e.type);
+        }
+    }
 }
