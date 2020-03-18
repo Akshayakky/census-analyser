@@ -1,6 +1,6 @@
 package com.bridgelabz.censusanalyser;
 
-public class CustomException extends Throwable {
+public class CensusAnalyserException extends Throwable {
 
     enum ExceptionType {
         NO_SUCH_FILE, INCORRECT_FILE_TYPE, DELIMITER_OR_HEADER_INCORRECT
@@ -8,7 +8,7 @@ public class CustomException extends Throwable {
 
     ExceptionType type;
 
-    CustomException(ExceptionType type, String message) {
+    CensusAnalyserException(ExceptionType type, String message) {
         super(message);
         this.type = type;
     }
