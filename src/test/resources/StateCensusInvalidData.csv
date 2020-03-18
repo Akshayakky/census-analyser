@@ -1,4 +1,4 @@
-State,Population,AreaInSqKm,DensityPerSqKm
+State,Invalid,AreaInSqKm,DensityPerSqKm
 Uttar Pradesh,199812341,240928,828
 Maharashta,112372972,307713,365
 Bihar,103804637,94163,1102
@@ -25,6 +25,6 @@ Meghalaya,2964007,22429,132
 Manipur,2721756,22327,122
 Nagaland,1980602,16579,119
 Goa,1457723,3702,394
-Arunachal Pradesh,1382611,0,0
+Arunachal Pradesh,1382611
 Mizoram,1091014,21081,52
 Sikkim,607688,7096,86
