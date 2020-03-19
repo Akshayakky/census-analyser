@@ -74,4 +74,15 @@ public class StateCensusAnalyserTestCases {
         } catch (CensusAnalyserException e) {
         }
     }
+
+    //Test Case TC2.2
+    @Test
+    public void givenStateCodeCSVFile_WhenFileNameIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            int counter = stateCensusAnalyser.loadStateCodeCSV("src/test/resources/IncorrectName.csv");
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
+        }
+    }
 }
