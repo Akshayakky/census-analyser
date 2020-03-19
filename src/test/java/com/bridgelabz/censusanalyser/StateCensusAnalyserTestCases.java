@@ -85,4 +85,15 @@ public class StateCensusAnalyserTestCases {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
     }
+
+    //Test Case TC2.3
+    @Test
+    public void givenStateCodeCSVFile_WhenFileTypeIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            int counter = stateCensusAnalyser.loadStateCodeCSV("src/test/resources/StateCode.pdf");
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, e.type);
+        }
+    }
 }
