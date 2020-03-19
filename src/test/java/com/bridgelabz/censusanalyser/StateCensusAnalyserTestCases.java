@@ -96,4 +96,15 @@ public class StateCensusAnalyserTestCases {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, e.type);
         }
     }
+
+    //Test Case TC2.4
+    @Test
+    public void givenStateCodeCSVFile_WhenDelimiterIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            int counter = stateCensusAnalyser.loadStateCodeCSV(STATECODE_CSV_INCORRECT_DATA_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
+        }
+    }
 }
