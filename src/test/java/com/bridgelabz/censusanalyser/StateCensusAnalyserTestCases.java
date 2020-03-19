@@ -63,4 +63,15 @@ public class StateCensusAnalyserTestCases {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
         }
     }
+
+    //Test Case TC2.1
+    @Test
+    public void givenStateCodeCSVFile_WhenFileCorrect_ThenReturnTrue() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            int counter = stateCensusAnalyser.loadStateCodeCSV(STATECODE_CSV_FILE_PATH);
+            Assert.assertEquals(37, counter);
+        } catch (CensusAnalyserException e) {
+        }
+    }
 }
