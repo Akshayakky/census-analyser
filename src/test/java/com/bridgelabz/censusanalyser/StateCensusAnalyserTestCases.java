@@ -6,15 +6,15 @@ import org.junit.Test;
 public class StateCensusAnalyserTestCases {
     private static final String SAMPLE_CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
     private static final String SAMPLE_CSV_INCORRECT_FILE_PATH = "src/test/resources/StateCensusInvalidData.csv";
-    private static final String SAMPLE_CSV_INCORRECT_FILE_NAME = "src/test/resources/IncorrectName.csv";
-    private static final String SAMPLE_CSV_INCORRECT_FILE_TYPE = "src/test/resources/StateCensusData.pdf";
+    private static String STATECODE_CSV_FILE_PATH = "src/test/resources/StateCode.csv";
+    private static String STATECODE_CSV_INCORRECT_DATA_FILE_PATH = "src/test/resources/StateCodeInvalidData.csv";
 
     //Test Case TC1.1
     @Test
     public void givenCSVFile_WhenFileCorrect_ThenReturnTrue() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-            int counter = stateCensusAnalyser.getNumberOfRecords(SAMPLE_CSV_FILE_PATH);
+            int counter = stateCensusAnalyser.loadCensusCSV(SAMPLE_CSV_FILE_PATH);
             Assert.assertEquals(29, counter);
         } catch (CensusAnalyserException e) {
         }
@@ -25,7 +25,7 @@ public class StateCensusAnalyserTestCases {
     public void givenCSVFile_WhenFileNameIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-            int counter = stateCensusAnalyser.getNumberOfRecords(SAMPLE_CSV_INCORRECT_FILE_NAME);
+            int counter = stateCensusAnalyser.loadCensusCSV("src/test/resources/IncorrectName.csv");
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
@@ -36,7 +36,7 @@ public class StateCensusAnalyserTestCases {
     public void givenCSVFile_WhenFileTypeIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-            int counter = stateCensusAnalyser.getNumberOfRecords(SAMPLE_CSV_INCORRECT_FILE_TYPE);
+            int counter = stateCensusAnalyser.loadCensusCSV("src/test/resources/StateCensusData.pdf");
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, e.type);
         }
@@ -47,7 +47,7 @@ public class StateCensusAnalyserTestCases {
     public void givenCSVFile_WhenDelimiterIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-            int counter = stateCensusAnalyser.getNumberOfRecords(SAMPLE_CSV_INCORRECT_FILE_PATH);
+            int counter = stateCensusAnalyser.loadCensusCSV(SAMPLE_CSV_INCORRECT_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
         }
@@ -58,7 +58,7 @@ public class StateCensusAnalyserTestCases {
     public void givenCSVFile_WhenHeaderIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
-            int counter = stateCensusAnalyser.getNumberOfRecords(SAMPLE_CSV_INCORRECT_FILE_PATH);
+            int counter = stateCensusAnalyser.loadCensusCSV(SAMPLE_CSV_INCORRECT_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
         }
