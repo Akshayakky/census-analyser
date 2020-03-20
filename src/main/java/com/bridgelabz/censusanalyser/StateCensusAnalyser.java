@@ -2,12 +2,9 @@ package com.bridgelabz.censusanalyser;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
 public class StateCensusAnalyser {
