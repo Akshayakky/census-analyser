@@ -3,7 +3,7 @@ package com.bridgelabz.censusanalyser;
 public class CensusAnalyserException extends Throwable {
 
     enum ExceptionType {
-        NO_SUCH_FILE, INCORRECT_FILE_TYPE, DELIMITER_OR_HEADER_INCORRECT
+        NO_SUCH_FILE, INCORRECT_FILE_TYPE, DELIMITER_OR_HEADER_INCORRECT, CENSUS_FILE_PROBLEM, UNABLE_TO_PARSE
     }
 
     ExceptionType type;
