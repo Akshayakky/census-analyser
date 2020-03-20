@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class OpenCSVBuilder implements ICSVBuilder{
     @Override
-    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvLoaderClass) throws CensusAnalyserException {
+    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvLoaderClass) throws CSVBuilderException {
         try {
             CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(csvLoaderClass)
@@ -17,7 +17,7 @@ public class OpenCSVBuilder implements ICSVBuilder{
             Iterator<E> csvStatesIterator = csvToBean.iterator();
             return csvStatesIterator;
         } catch (RuntimeException e) {
-            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, "Delimiter Or Header Incorrect");
+            throw new CSVBuilderException(CSVBuilderException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, "Delimiter Or Header Incorrect. Error While Building CSV.");
         }
     }
 }
