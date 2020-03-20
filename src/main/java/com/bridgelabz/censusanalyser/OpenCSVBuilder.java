@@ -4,18 +4,17 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.Reader;
-import java.util.Iterator;
+import java.util.List;
 
 public class OpenCSVBuilder implements ICSVBuilder{
     @Override
-    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvLoaderClass) throws CSVBuilderException {
+    public <E> List getCSVFileList(Reader reader, Class<E> csvLoaderClass) throws CSVBuilderException {
         try {
             CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(csvLoaderClass)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
-            Iterator<E> csvStatesIterator = csvToBean.iterator();
-            return csvStatesIterator;
+            return  csvToBean.parse();
         } catch (RuntimeException e) {
             throw new CSVBuilderException(CSVBuilderException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, "Delimiter Or Header Incorrect. Error While Building CSV.");
         }

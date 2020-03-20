@@ -2,11 +2,13 @@ package com.bridgelabz.censusanalyser;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.Iterator;
-import java.util.stream.StreamSupport;
+import java.util.Arrays;
+import java.util.List;
 
 public class StateCensusAnalyser {
 
@@ -14,7 +16,7 @@ public class StateCensusAnalyser {
         System.out.println("Welcome To Census Analyser Problem");
     }
 
-    public <E> int loadCSV(String csvPath, Class<E> csvLoaderClass) throws CensusAnalyserException {
+    public int loadCSV(String csvPath, Class csvLoaderClass) throws CensusAnalyserException {
         int lastIndexOf = csvPath.lastIndexOf(".");
         String fileExtension = (lastIndexOf == -1) ? "" : csvPath.substring(lastIndexOf);
         if (!fileExtension.equals(".csv"))
@@ -23,10 +25,8 @@ public class StateCensusAnalyser {
                 Reader reader = Files.newBufferedReader(Paths.get(csvPath));
         ) {
             ICSVBuilder icsvBuilder = new OpenCSVBuilder();
-            Iterator<E> csvUserIterator = icsvBuilder.getCSVFileIterator(reader, csvLoaderClass);
-            Iterable<E> csvStateCensusIterable = () -> csvUserIterator;
-            int counter = (int) StreamSupport.stream(csvStateCensusIterable.spliterator(), false).count();
-            return counter;
+            List csvList = icsvBuilder.getCSVFileList(reader, csvLoaderClass);
+            return csvList.size();
         } catch (NoSuchFileException e) {
             throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, "No Such File Exists");
         } catch (IOException e) {
