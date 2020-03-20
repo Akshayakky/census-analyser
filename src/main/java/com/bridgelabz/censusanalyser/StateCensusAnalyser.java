@@ -25,27 +25,14 @@ public class StateCensusAnalyser {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(csvPath));
         ) {
-            Iterator<E> csvUserIterator = getCSVFileIterator(reader, csvLoaderClass);
+            Iterator<E> csvUserIterator = new OpenCSVBuilder().getCSVFileIterator(reader, csvLoaderClass);
             Iterable<E> csvStateCensusIterable = () -> csvUserIterator;
             int counter = (int) StreamSupport.stream(csvStateCensusIterable.spliterator(), false).count();
             return counter;
         } catch (NoSuchFileException e) {
             throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, "No Such File Exists");
         } catch (IOException e) {
-            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, "Delimiter Or Header Incorrect");
-        }
-    }
-
-    private <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvLoaderClass) throws CensusAnalyserException {
-        try {
-            CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(csvLoaderClass)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-            Iterator<E> csvStatesIterator = csvToBean.iterator();
-            return csvStatesIterator;
-        } catch (RuntimeException e) {
-            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, "Delimiter Or Header Incorrect");
+            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.getMessage());
         }
     }
 }
