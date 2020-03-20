@@ -1,8 +1,5 @@
 package com.bridgelabz.censusanalyser;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -25,7 +22,8 @@ public class StateCensusAnalyser {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(csvPath));
         ) {
-            Iterator<E> csvUserIterator = new OpenCSVBuilder().getCSVFileIterator(reader, csvLoaderClass);
+            ICSVBuilder icsvBuilder = new OpenCSVBuilder();
+            Iterator<E> csvUserIterator = icsvBuilder.getCSVFileIterator(reader, csvLoaderClass);
             Iterable<E> csvStateCensusIterable = () -> csvUserIterator;
             int counter = (int) StreamSupport.stream(csvStateCensusIterable.spliterator(), false).count();
             return counter;
