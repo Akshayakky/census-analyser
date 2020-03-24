@@ -122,8 +122,8 @@ public class StateCensusAnalyserTestCases {
 
     @Test
     public void givenIndianCensusData_WhenListSorted_ThenCheckFirstState() {
-        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
             censusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
             IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
@@ -135,14 +135,25 @@ public class StateCensusAnalyserTestCases {
 
     @Test
     public void givenIndianCensusData_WhenListSorted_ThenCheckLastState() {
-        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
         try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
             censusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
             IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
             Assert.assertEquals("West Bengal", censusCSV[censusCSV.length - 1].state);
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenCensusDAOList_WhenNull_ShouldThrowException() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
+            IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, e.type);
         }
     }
 }
