@@ -2,6 +2,7 @@ package com.bridgelabz.censusanalyser;
 
 public class IndiaCensusDAO {
     public String state;
+    public String stateCode;
     public long population;
     public long areaInSqKm;
     public int densityPerSqKm;

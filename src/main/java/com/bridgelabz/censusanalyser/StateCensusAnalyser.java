@@ -58,8 +58,17 @@ public class StateCensusAnalyser {
                 Reader reader = Files.newBufferedReader(Paths.get(csvPath));
         ) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            List<IndiaStateCodeCSV> censusCSVList = csvBuilder.getCSVFileList(reader, IndiaStateCodeCSV.class);
-            return censusCSVList.size();
+            Iterator<IndiaStateCodeCSV> csvIterator = csvBuilder.getCSVFileIterator(reader, IndiaStateCodeCSV.class);
+            int count = 0;
+            while (csvIterator.hasNext()) {
+                count++;
+                IndiaStateCodeCSV stateCSV = csvIterator.next();
+                IndiaCensusDAO censusDAO = censusStateMap.get(stateCSV.getStateName());
+                if (censusDAO == null)
+                    continue;
+                censusDAO.stateCode = stateCSV.getStateCode();
+            }
+            return count;
         } catch (NoSuchFileException e) {
             throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, "No Such File Exists");
         } catch (IOException e) {
