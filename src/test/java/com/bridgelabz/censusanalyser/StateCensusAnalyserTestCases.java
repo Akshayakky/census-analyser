@@ -192,4 +192,46 @@ public class StateCensusAnalyserTestCases {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, e.type);
         }
     }
+
+    @Test
+    public void givenIndianCensusData_WhenStateCodeSorted_ThenCheckFirstStateCode() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            censusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
+            censusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getStateCodeWiseSortedCensusData();
+            IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
+            Assert.assertEquals("AP", censusCSV[0].stateCode);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_WhenStateCodeSorted_ThenCheckLastStateCode() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            censusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
+            censusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getStateCodeWiseSortedCensusData();
+            IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
+            Assert.assertEquals("WB", censusCSV[censusCSV.length - 1].stateCode);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_WhenStateCodeSortedInvalid_ThenCheckFirstStateCode() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            censusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
+            censusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getStateCodeWiseSortedCensusData();
+            IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
+            Assert.assertNotEquals("WB", censusCSV[1].stateCode);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
