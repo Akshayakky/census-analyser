@@ -77,7 +77,7 @@ public class StateCensusAnalyserTestCases {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
             stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             int counter = stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
-            Assert.assertEquals(37, counter);
+            Assert.assertEquals(29, counter);
         } catch (CensusAnalyserException e) {
         }
     }
