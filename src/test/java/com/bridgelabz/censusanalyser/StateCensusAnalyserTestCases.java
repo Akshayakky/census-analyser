@@ -16,6 +16,7 @@ public class StateCensusAnalyserTestCases {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
             int counter = stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
+            stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
             Assert.assertEquals(29, counter);
         } catch (CensusAnalyserException e) {
         }
@@ -27,6 +28,7 @@ public class StateCensusAnalyserTestCases {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
             int counter = stateCensusAnalyser.loadIndiaCensusData("src/test/resources/IncorrectName.csv");
+            stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
@@ -38,6 +40,7 @@ public class StateCensusAnalyserTestCases {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
             int counter = stateCensusAnalyser.loadIndiaCensusData("src/test/resources/StateCensusData.pdf");
+            stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, e.type);
         }
@@ -49,6 +52,7 @@ public class StateCensusAnalyserTestCases {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
             int counter = stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_INCORRECT_FILE_PATH);
+            stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
         }
@@ -60,6 +64,7 @@ public class StateCensusAnalyserTestCases {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
             int counter = stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_INCORRECT_FILE_PATH);
+            stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
         }
@@ -70,6 +75,7 @@ public class StateCensusAnalyserTestCases {
     public void givenStateCodeCSVFile_WhenFileCorrect_ThenReturnCSVCount() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             int counter = stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
             Assert.assertEquals(37, counter);
         } catch (CensusAnalyserException e) {
@@ -81,6 +87,7 @@ public class StateCensusAnalyserTestCases {
     public void givenStateCodeCSVFile_WhenFileNameIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             int counter = stateCensusAnalyser.loadIndiaStateCode("src/test/resources/IncorrectName.csv");
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
@@ -92,6 +99,7 @@ public class StateCensusAnalyserTestCases {
     public void givenStateCodeCSVFile_WhenFileTypeIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             int counter = stateCensusAnalyser.loadIndiaStateCode("src/test/resources/StateCode.pdf");
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, e.type);
@@ -103,6 +111,7 @@ public class StateCensusAnalyserTestCases {
     public void givenStateCodeCSVFile_WhenDelimiterIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             int counter = stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_INCORRECT_DATA_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
@@ -114,6 +123,7 @@ public class StateCensusAnalyserTestCases {
     public void givenStateCodeCSVFile_WhenHeaderIncorrect_ThenThrowException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             int counter = stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_INCORRECT_DATA_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
@@ -125,6 +135,7 @@ public class StateCensusAnalyserTestCases {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
             int counter = stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
+            stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
             Assert.assertNotEquals(299, counter);
         } catch (CensusAnalyserException e) {
         }
@@ -134,6 +145,7 @@ public class StateCensusAnalyserTestCases {
     public void givenStateCodeCSVFile_WhenFileCorrect_ThenReturnCorrectCount() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+            stateCensusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
             int counter = stateCensusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
             Assert.assertNotEquals(487, counter);
         } catch (CensusAnalyserException e) {
