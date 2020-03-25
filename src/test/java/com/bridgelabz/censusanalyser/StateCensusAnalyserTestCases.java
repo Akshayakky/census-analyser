@@ -314,7 +314,35 @@ public class StateCensusAnalyserTestCases {
             censusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
             String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.DENSITY);
             IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
-            Assert.assertEquals(1102, censusCSV[censusCSV.length-1].densityPerSqKm);
+            Assert.assertEquals(1102, censusCSV[censusCSV.length - 1].densityPerSqKm);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_WhenAreaSorted_ThenCheckLowestArea() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            censusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
+            censusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.AREA);
+            IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
+            Assert.assertEquals(3702, censusCSV[1].areaInSqKm);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_WhenAreaSorted_ThenCheckHighestArea() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            censusAnalyser.loadIndiaCensusData(SAMPLE_CSV_FILE_PATH);
+            censusAnalyser.loadIndiaStateCode(STATECODE_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.AREA);
+            IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
+            Assert.assertEquals(342239, censusCSV[censusCSV.length - 1].areaInSqKm);
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
         }
