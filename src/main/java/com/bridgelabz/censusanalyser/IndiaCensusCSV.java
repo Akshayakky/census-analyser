@@ -10,8 +10,8 @@ public class IndiaCensusCSV {
     public long population;
 
     @CsvBindByName(column = "AreaInSqKm", required = true)
-    public long areaInSqKm;
+    public double areaInSqKm;
 
     @CsvBindByName(column = "DensityPerSqKm", required = true)
-    public int densityPerSqKm;
+    public double densityPerSqKm;
 }

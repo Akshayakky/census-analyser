@@ -1,0 +1,42 @@
+package com.bridgelabz.censusanalyser;
+
+import java.util.Comparator;
+
+public class CensusDAO {
+    public String state;
+    public String stateCode;
+    public long population;
+    public double totalArea;
+    public double populationDensity;
+
+    public CensusDAO(IndiaCensusCSV indiaCensusCSV) {
+        state = indiaCensusCSV.state;
+        population = indiaCensusCSV.population;
+        totalArea = indiaCensusCSV.areaInSqKm;
+        populationDensity = indiaCensusCSV.densityPerSqKm;
+    }
+
+    public CensusDAO(USCensusCSV usCensusCSV) {
+        state = usCensusCSV.getState();
+        population = usCensusCSV.getPopulation();
+        totalArea = usCensusCSV.getTotalArea();
+        populationDensity = usCensusCSV.getPopulationDensity();
+    }
+
+    public static Comparator<CensusDAO> getSortComparator(StateCensusAnalyser.SortingMode mode) {
+        switch (mode) {
+            case STATE:
+                return Comparator.comparing(census -> census.state);
+            case POPULATION:
+                return Comparator.comparing(census -> census.population);
+            case DENSITY:
+                return Comparator.comparing(census -> census.populationDensity);
+            case AREA:
+                return Comparator.comparing(census -> census.totalArea);
+            case STATECODE:
+                return Comparator.comparing(census -> census.stateCode);
+            default:
+                return null;
+        }
+    }
+}
