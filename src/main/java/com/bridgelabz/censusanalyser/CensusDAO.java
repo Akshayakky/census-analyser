@@ -10,10 +10,10 @@ public class CensusDAO {
     public double populationDensity;
 
     public CensusDAO(IndiaCensusCSV indiaCensusCSV) {
-        state = indiaCensusCSV.state;
-        population = indiaCensusCSV.population;
-        totalArea = indiaCensusCSV.areaInSqKm;
-        populationDensity = indiaCensusCSV.densityPerSqKm;
+        state = indiaCensusCSV.getState();
+        population = indiaCensusCSV.getPopulation();
+        totalArea = indiaCensusCSV.getAreaInSqKm();
+        populationDensity = indiaCensusCSV.getDensityPerSqKm();
     }
 
     public CensusDAO(USCensusCSV usCensusCSV) {
