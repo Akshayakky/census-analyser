@@ -29,7 +29,8 @@ public class StateCensusAnalyser {
     }
 
     public int loadIndiaCensusData(String csvPath) throws CensusAnalyserException {
-        return loadCensusData(csvPath, IndiaCensusCSV.class);
+        censusStateMap = new CensusLoader().loadCensusData(csvPath, IndiaCensusCSV.class);
+        return censusStateMap.size();
     }
 
     public int loadIndiaStateCode(String csvPath) throws CensusAnalyserException {
@@ -58,36 +59,8 @@ public class StateCensusAnalyser {
     }
 
     public int loadUSCensusData(String csvPath) throws CensusAnalyserException {
-        return loadCensusData(csvPath, USCensusCSV.class);
-    }
-
-    public <E> int loadCensusData(String csvPath, Class<E> censusCSVClass) throws CensusAnalyserException {
-        int lastIndexOf = csvPath.lastIndexOf(".");
-        String fileExtension = (lastIndexOf == -1) ? "" : csvPath.substring(lastIndexOf);
-        if (!fileExtension.equals(".csv"))
-            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, "File Type Incorrect");
-        try (
-                Reader reader = Files.newBufferedReader(Paths.get(csvPath));
-        ) {
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<E> csvIterator = csvBuilder.getCSVFileIterator(reader, censusCSVClass);
-            Iterable<E> csvIterable = () -> csvIterator;
-            if (censusCSVClass.getName().equals("com.bridgelabz.censusanalyser.IndiaCensusCSV"))
-                StreamSupport.stream(csvIterable.spliterator(), false)
-                        .map(IndiaCensusCSV.class::cast)
-                        .forEach(censusCSV -> censusStateMap.put(censusCSV.getState(), new CensusDAO(censusCSV)));
-            if (censusCSVClass.getName().equals("com.bridgelabz.censusanalyser.USCensusCSV"))
-                StreamSupport.stream(csvIterable.spliterator(), false)
-                        .map(USCensusCSV.class::cast)
-                        .forEach(censusCSV -> censusStateMap.put(censusCSV.getState(), new CensusDAO(censusCSV)));
-            return this.censusStateMap.size();
-        } catch (NoSuchFileException e) {
-            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, "No Such File Exists");
-        } catch (IOException e) {
-            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.getMessage());
-        } catch (CSVBuilderException e) {
-            throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, "Delimiter Or Header Incorrect. Error While Building CSV.");
-        }
+        censusStateMap = new CensusLoader().loadCensusData(csvPath, USCensusCSV.class);
+        return censusStateMap.size();
     }
 
     public String getSortedCensusData(SortingMode mode) throws CensusAnalyserException {
