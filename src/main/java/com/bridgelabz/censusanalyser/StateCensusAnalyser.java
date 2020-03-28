@@ -1,20 +1,13 @@
 package com.bridgelabz.censusanalyser;
 
-import com.bridgelabz.csvbuilder.CSVBuilderException;
-import com.bridgelabz.csvbuilder.CSVBuilderFactory;
-import com.bridgelabz.csvbuilder.ICSVBuilder;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class StateCensusAnalyser {
+
+    public enum Country {INDIA, US}
 
     public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
 
@@ -28,13 +21,8 @@ public class StateCensusAnalyser {
         System.out.println("Welcome To Census Analyser Problem");
     }
 
-    public int loadIndiaCensusData(String... csvPath) throws CensusAnalyserException {
-        censusStateMap = new CensusLoader().loadCensusData(IndiaCensusCSV.class, csvPath);
-        return censusStateMap.size();
-    }
-
-    public int loadUSCensusData(String... csvPath) throws CensusAnalyserException {
-        censusStateMap = new CensusLoader().loadCensusData(USCensusCSV.class, csvPath);
+    public int loadCensusData(StateCensusAnalyser.Country country, String... csvPath) throws CensusAnalyserException {
+        censusStateMap = new CensusLoader().loadCensusData(country, csvPath);
         return censusStateMap.size();
     }
 
