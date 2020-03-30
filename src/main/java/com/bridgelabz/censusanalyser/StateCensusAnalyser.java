@@ -2,14 +2,13 @@ package com.bridgelabz.censusanalyser;
 
 import com.google.gson.Gson;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StateCensusAnalyser {
-
-    public enum Country {INDIA, US}
-
-    public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
 
     Map<String, CensusDAO> censusStateMap = null;
 
@@ -22,7 +21,7 @@ public class StateCensusAnalyser {
     }
 
     public int loadCensusData(StateCensusAnalyser.Country country, String... csvPath) throws CensusAnalyserException {
-        censusStateMap = new CensusLoader().loadCensusData(country, csvPath);
+        censusStateMap = new CensusAdapterFactory().getCensusData(country, csvPath);
         return censusStateMap.size();
     }
 
@@ -48,4 +47,8 @@ public class StateCensusAnalyser {
             }
         }
     }
+
+    public enum Country {INDIA, US}
+
+    public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
 }

@@ -18,6 +18,7 @@ public class CensusDAO {
 
     public CensusDAO(USCensusCSV usCensusCSV) {
         state = usCensusCSV.getState();
+        stateCode = usCensusCSV.getStateId();
         population = usCensusCSV.getPopulation();
         totalArea = usCensusCSV.getTotalArea();
         populationDensity = usCensusCSV.getPopulationDensity();
