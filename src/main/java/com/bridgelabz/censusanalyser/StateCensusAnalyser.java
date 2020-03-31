@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 
 public class StateCensusAnalyser {
 
+    public enum Country {INDIA, US}
+
+    public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
+
     Map<String, CensusDAO> censusStateMap = null;
 
     public StateCensusAnalyser() {
@@ -47,8 +51,4 @@ public class StateCensusAnalyser {
             }
         }
     }
-
-    public enum Country {INDIA, US}
-
-    public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
 }

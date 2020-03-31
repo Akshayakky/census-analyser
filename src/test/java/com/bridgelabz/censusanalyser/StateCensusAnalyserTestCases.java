@@ -344,4 +344,30 @@ public class StateCensusAnalyserTestCases {
         } catch (CensusAnalyserException e) {
         }
     }
+
+    @Test
+    public void givenUSCensusData_WhenPopulationSorted_ThenCheckHighestPopulation() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            censusAnalyser.loadCensusData(StateCensusAnalyser.Country.US, US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.POPULATION);
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals(37253956, censusCSV[censusCSV.length - 1].population, 0);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenPopulationSorted_ThenCheckLowestPopulation() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+            censusAnalyser.loadCensusData(StateCensusAnalyser.Country.US, US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.POPULATION);
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals(563626, censusCSV[0].population, 0);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
