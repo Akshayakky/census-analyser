@@ -3,6 +3,7 @@ package com.bridgelabz.censusanalyser;
 import com.opencsv.bean.CsvBindByName;
 
 public class USCensusCSV {
+
     @CsvBindByName(column = "State Id", required = true)
     private String stateId;
     @CsvBindByName(column = "State", required = true)
@@ -13,6 +14,18 @@ public class USCensusCSV {
     private double totalArea;
     @CsvBindByName(column = "Population Density", required = true)
     private double populationDensity;
+
+    public USCensusCSV(String stateId, String state, long population, double totalArea, double populationDensity){
+        this.stateId = stateId;
+        this.state = state;
+        this.population = population;
+        this.totalArea = totalArea;
+        this.populationDensity = populationDensity;
+    }
+
+    public USCensusCSV(){
+
+    }
 
     public String getStateId() {
         return stateId;

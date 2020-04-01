@@ -10,7 +10,12 @@ import java.util.stream.Collectors;
 
 public class StateCensusAnalyser {
 
+    public enum Country {INDIA, US}
+
+    public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
+
     Map<String, CensusDAO> censusStateMap = null;
+
     private Country country;
 
     public StateCensusAnalyser(Country country) {
@@ -36,13 +41,9 @@ public class StateCensusAnalyser {
             throw new CensusAnalyserException(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, "No Census Data");
         Comparator<CensusDAO> censusCSVComparator = CensusDAO.getSortComparator(mode);
         ArrayList censusDTO = censusStateMap.values().stream().
-                sorted(censusCSVComparator).map(censusDAO -> censusDAO.getCensusDTO())
+                sorted(censusCSVComparator).map(censusDAO -> censusDAO.getCensusDTO(country))
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedStateCensusJson = new Gson().toJson(censusDTO);
         return sortedStateCensusJson;
     }
-
-    public enum Country {INDIA, US}
-
-    public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
 }
