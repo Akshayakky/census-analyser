@@ -9,6 +9,7 @@ public class CensusDAO {
     public double totalArea;
     public double populationDensity;
 
+
     public CensusDAO(IndiaCensusCSV indiaCensusCSV) {
         state = indiaCensusCSV.getState();
         population = indiaCensusCSV.getPopulation();
@@ -39,5 +40,9 @@ public class CensusDAO {
             default:
                 return null;
         }
+    }
+
+    public Object getCensusDTO() {
+        return new IndiaCensusCSV(state, population, totalArea, populationDensity);
     }
 }
