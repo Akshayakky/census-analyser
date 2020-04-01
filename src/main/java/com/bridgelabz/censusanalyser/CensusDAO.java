@@ -9,7 +9,6 @@ public class CensusDAO {
     public double totalArea;
     public double populationDensity;
 
-
     public CensusDAO(IndiaCensusCSV indiaCensusCSV) {
         state = indiaCensusCSV.getState();
         population = indiaCensusCSV.getPopulation();
@@ -43,7 +42,7 @@ public class CensusDAO {
     }
 
     public Object getCensusDTO(StateCensusAnalyser.Country country) {
-        if(country.equals(StateCensusAnalyser.Country.INDIA))
+        if (country.equals(StateCensusAnalyser.Country.INDIA))
             return new IndiaCensusCSV(state, population, totalArea, populationDensity);
         return new USCensusCSV(stateCode, state, population, totalArea, populationDensity);
     }
