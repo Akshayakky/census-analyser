@@ -331,4 +331,30 @@ public class StateCensusAnalyserTestCases {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenUSCensusData_WhenStateCodeSorted_ThenCheckLowestStateCode() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US);
+            censusAnalyser.loadCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.STATECODE);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals("AK", censusCSV[0].getStateId());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenStateCodeSorted_ThenCheckHighestStateCode() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US);
+            censusAnalyser.loadCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.STATECODE);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals("WY", censusCSV[censusCSV.length-1].getStateId());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
