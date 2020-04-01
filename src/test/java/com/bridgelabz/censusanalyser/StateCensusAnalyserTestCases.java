@@ -383,4 +383,30 @@ public class StateCensusAnalyserTestCases {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenUSCensusData_WhenStateSorted_ThenCheckFirstState() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US);
+            censusAnalyser.loadCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.STATE);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals("Alabama", censusCSV[0].getState());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenStateSorted_ThenCheckLastState() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US);
+            censusAnalyser.loadCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.STATE);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals("Wyoming", censusCSV[censusCSV.length-1].getState());
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
