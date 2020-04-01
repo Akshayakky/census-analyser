@@ -357,4 +357,30 @@ public class StateCensusAnalyserTestCases {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenUSCensusData_WhenDensitySorted_ThenCheckLowestDensity() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US);
+            censusAnalyser.loadCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.DENSITY);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals(0.46, censusCSV[0].getPopulationDensity(),0);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenDensitySorted_ThenCheckHighestDensity() {
+        try {
+            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US);
+            censusAnalyser.loadCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getSortedCensusData(StateCensusAnalyser.SortingMode.DENSITY);
+            USCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, USCensusCSV[].class);
+            Assert.assertEquals(3805.61, censusCSV[censusCSV.length-1].getPopulationDensity(),0);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
