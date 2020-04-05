@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class StateCensusAnalyser {
 
+    private CensusAdapterFactory censusAdapterFactory = new CensusAdapterFactory();
+
     public enum Country {INDIA, US}
 
     public enum SortingMode {STATE, STATECODE, POPULATION, DENSITY, AREA}
@@ -18,8 +20,10 @@ public class StateCensusAnalyser {
 
     private Country country;
 
-    public StateCensusAnalyser(Country country) {
+    public StateCensusAnalyser(Country country, CensusAdapterFactory... censusAdapterFactory) {
         this.country = country;
+        if (censusAdapterFactory.length == 1)
+            this.censusAdapterFactory = censusAdapterFactory[0];
     }
 
     public StateCensusAnalyser() {
@@ -31,7 +35,7 @@ public class StateCensusAnalyser {
     }
 
     public int loadCensusData(String... csvPath) throws CensusAnalyserException {
-        CensusAdapter censusAdapter = new CensusAdapterFactory().getCensusData(country, csvPath);
+        CensusAdapter censusAdapter = this.censusAdapterFactory.getCensusData(country, csvPath);
         censusStateMap = censusAdapter.loadCensusData(csvPath);
         return censusStateMap.size();
     }

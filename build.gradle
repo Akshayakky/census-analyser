@@ -16,4 +16,5 @@ dependencies {
     compile "com.opencsv:opencsv:4.0"
     compile 'com.google.code.gson:gson:2.2.+'
     compile(files("/home/akshay/IdeaProjects/census-analyser/src/main/resources/CSVBuilder.jar"))
+    testImplementation 'org.mockito:mockito-core:3.+'
 }
