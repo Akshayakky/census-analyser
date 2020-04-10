@@ -28,6 +28,12 @@ public class StateCensusAnalyserMockitoTest {
     private Map<String, CensusDAO> censusStateMapINDIA;
     private Map<String, CensusDAO> censusStateMapUS;
 
+    private static final String INDIA_CENSUS_CSV_FILE_PATH = "src/test/resources/IndiaCensusData.csv";
+    private static final String INDIA_CENSUS_INCORRECT_CSV_FILE_PATH = "src/test/resources/StateCensusInvalidData.csv";
+    private static final String INDIA_STATECODE_CSV_FILE_PATH = "src/test/resources/IndiaStateCode.csv";
+    private static final String INDIA_STATECODE_INCORRECT_CSV_FILE_PATH = "src/test/resources/StateCodeInvalidData.csv";
+    private static final String US_CENSUS_CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
+
     @Before
     public void setup() {
         censusStateMapINDIA = new HashMap<>();
@@ -226,14 +232,62 @@ public class StateCensusAnalyserMockitoTest {
     }
 
     @Test
-    public void givenUSCensusData_WhenFileCorrect_ThenReturnCount() {
+    public void givenIndianCensusData_WhenFileCorrect_ThenLoadCensusData() {
         try {
-            when(censusAdapterFactory.getCensusData(StateCensusAnalyser.Country.US)).thenReturn(censusAdapter);
-            when(censusAdapter.loadCensusData()).thenReturn(censusStateMapUS);
-            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US, censusAdapterFactory);
-            int counter = stateCensusAnalyser.loadCensusData();
-            Assert.assertEquals(5, counter);
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.INDIA);
+            int counter = stateCensusAnalyser.loadCensusData("src/test/resources/IndiaCensusData.csv", "src/test/resources/IndiaStateCode.csv");
+            Assert.assertEquals(29, counter);
         } catch (CensusAnalyserException e) {
+        }
+    }
+
+    @Test
+    public void givenUSCensusData_WhenFileCorrect_ThenLoadCensusData() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.US);
+            int counter = stateCensusAnalyser.loadCensusData("src/test/resources/USCensusData.csv");
+            Assert.assertEquals(51, counter);
+        } catch (CensusAnalyserException e) {
+        }
+    }
+
+    @Test
+    public void givenCSVFile_WhenFileNameIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.INDIA);
+            int counter = stateCensusAnalyser.loadCensusData("src/test/resources/IncorrectName.csv", INDIA_STATECODE_CSV_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
+        }
+    }
+
+    @Test
+    public void givenCSVFile_WhenFileTypeIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.INDIA);
+            int counter = stateCensusAnalyser.loadCensusData("src/test/resources/StateCensusData.pdf", INDIA_STATECODE_CSV_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE, e.type);
+        }
+    }
+
+    @Test
+    public void givenCSVFile_WhenDelimiterIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.INDIA);
+            int counter = stateCensusAnalyser.loadCensusData(INDIA_CENSUS_INCORRECT_CSV_FILE_PATH, INDIA_STATECODE_CSV_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
+        }
+    }
+
+    @Test
+    public void givenCSVFile_WhenHeaderIncorrect_ThenThrowException() {
+        try {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(StateCensusAnalyser.Country.INDIA);
+            int counter = stateCensusAnalyser.loadCensusData(INDIA_CENSUS_INCORRECT_CSV_FILE_PATH, INDIA_STATECODE_CSV_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.DELIMITER_OR_HEADER_INCORRECT, e.type);
         }
     }
 

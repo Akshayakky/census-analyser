@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -26,16 +25,8 @@ public class StateCensusAnalyser {
             this.censusAdapterFactory = censusAdapterFactory[0];
     }
 
-    public StateCensusAnalyser() {
-        this.censusStateMap = new HashMap<String, CensusDAO>();
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Welcome To Census Analyser Problem");
-    }
-
     public int loadCensusData(String... csvPath) throws CensusAnalyserException {
-        CensusAdapter censusAdapter = this.censusAdapterFactory.getCensusData(country, csvPath);
+        CensusAdapter censusAdapter = this.censusAdapterFactory.getCensusData(country);
         censusStateMap = censusAdapter.loadCensusData(csvPath);
         return censusStateMap.size();
     }

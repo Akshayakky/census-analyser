@@ -1,7 +1,7 @@
 package com.bridgelabz.censusanalyser;
 
 public class CensusAdapterFactory {
-    public <E> CensusAdapter getCensusData(StateCensusAnalyser.Country country, String... csvFilePath) throws CensusAnalyserException {
+    public <E> CensusAdapter getCensusData(StateCensusAnalyser.Country country) throws CensusAnalyserException {
         if (country.equals(StateCensusAnalyser.Country.INDIA))
             return new IndiaCensusAdapter();
         else if (country.equals(StateCensusAnalyser.Country.US))
